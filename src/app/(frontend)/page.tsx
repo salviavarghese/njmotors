@@ -6,37 +6,45 @@ import Reveal from '@/components/Reveal'
 
 export const dynamic = 'force-dynamic'
 
-export default async function HomePage() {
-  const payload = await getPayloadClient()
 
-  const featured = await payload.find({
-    collection: 'vehicles',
-    where: {
-      and: [{ featured: { equals: true } }, { status: { not_equals: 'Sold' } }],
-    },
-    limit: 3,
-    depth: 1,
-  })
+async function getCars() {
+  try {
+    const payload = await getPayloadClient()
 
-  const sold = await payload.find({
-    collection: 'vehicles',
-    where: { status: { equals: 'Sold' } },
-    sort: '-soldDate',
-    limit: 3,
-    depth: 1,
-  })
-
-  // Fallback: if nothing is flagged featured, just show latest available cars.
-  let cards = featured.docs
-  if (cards.length === 0) {
-    const latest = await payload.find({
+    const featured = await payload.find({
       collection: 'vehicles',
-      where: { status: { not_equals: 'Sold' } },
+      where: { and: [{ featured: { equals: true } }, { status: { not_equals: 'Sold' } }] },
       limit: 3,
       depth: 1,
     })
-    cards = latest.docs
+
+    const sold = await payload.find({
+      collection: 'vehicles',
+      where: { status: { equals: 'Sold' } },
+      sort: '-soldDate',
+      limit: 3,
+      depth: 1,
+    })
+
+    let cards = featured.docs
+    if (cards.length === 0) {
+      const latest = await payload.find({
+        collection: 'vehicles',
+        where: { status: { not_equals: 'Sold' } },
+        limit: 3,
+        depth: 1,
+      })
+      cards = latest.docs
+    }
+
+    return { cards, sold: sold.docs }
+  } catch {
+    return { cards: [], sold: [] }
   }
+}
+
+export default async function HomePage() {
+  const { cards, sold } = await getCars()
 
   return (
     <>
@@ -104,8 +112,8 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* RECENTLY SOLD - urgency */}
-      {sold.docs.length > 0 && (
+      {/* RECENTLY SOLD  */}
+      {sold.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 py-16">
           <div className="flex items-end justify-between">
             <div>
@@ -117,7 +125,7 @@ export default async function HomePage() {
             </Link>
           </div>
           <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {sold.docs.map((v) => (
+            {sold.map((v) => (
               <Reveal key={v.id}><VehicleCard vehicle={v} /></Reveal>
             ))}
           </div>
