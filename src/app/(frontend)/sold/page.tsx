@@ -1,0 +1,39 @@
+import { getPayloadClient } from '@/lib/payload'
+import VehicleCard from '@/components/VehicleCard'
+import type { Metadata } from 'next'
+
+export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: 'Recently Sold Cars',
+  description:
+    'See the cars NJ Motors has recently sold. Stock moves fast — get in touch early so you don’t miss the next one.',
+}
+
+export default async function SoldPage() {
+  const payload = await getPayloadClient()
+  const result = await payload.find({
+    collection: 'vehicles',
+    where: { status: { equals: 'Sold' } },
+    sort: '-soldDate',
+    limit: 50,
+    depth: 1,
+  })
+
+  return (
+    <div className="mx-auto max-w-6xl px-4 py-12">
+      <h1 className="text-3xl font-extrabold text-[var(--brand)]">Recently sold</h1>
+      <p className="mt-1 max-w-xl text-[var(--muted)]">
+        These have all found new owners. Our stock moves quickly. If you see something you like on
+        our page, don&apos;t wait around.
+      </p>
+      {result.docs.length === 0 ? (
+        <p className="mt-12 text-[var(--muted)]">Nothing here yet, check back soon.</p>
+      ) : (
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {result.docs.map((v) => <VehicleCard key={v.id} vehicle={v} />)}
+        </div>
+      )}
+    </div>
+  )
+}

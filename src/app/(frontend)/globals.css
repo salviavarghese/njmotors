@@ -1,0 +1,30 @@
+@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap');
+
+:root {
+  --brand: #0d0d0f;        /* near black to match the logo background, premium */
+  --brand-accent: #d6132b;  /* the logo's red */
+  --ink: #15171a;           /* body text */
+  --muted: #6b7280;         /* secondary text */
+  --line: #e5e7eb;          /* borders */
+  --bg-soft: #f4f5f7;       /* light section backgrounds */
+}
+
+@theme inline {
+  --color-brand: var(--brand);
+  --color-brand-accent: var(--brand-accent);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  color: var(--ink);
+  background: #fff;
+  font-family: 'Manrope', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* fade in on scroll */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity .8s cubic-bezier(0.16, 1, 0.3, 1), transform .8s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.is-visible { opacity: 1; transform: none; }
