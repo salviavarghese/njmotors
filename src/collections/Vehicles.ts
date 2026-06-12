@@ -1,4 +1,15 @@
 import type { CollectionConfig } from 'payload'
+import carDatabase from '@/lib/carDatabase'
+
+// Build Make dropdown options from carDatabase (brand names).
+const MAKE_OPTIONS = Object.keys(carDatabase)
+  .map((k) => ({ label: k.replace(/_/g, ' '), value: k.replace(/_/g, ' ') }))
+  .sort((a, b) => a.label.localeCompare(b.label))
+
+// Build Model dropdown options: every model across all brands, de-duplicated.
+const MODEL_OPTIONS = Array.from(new Set(Object.values(carDatabase).flat()))
+  .sort()
+  .map((m) => ({ label: m, value: m }))
 
 // Helper: turn "2019 BMW 320d M Sport" -> "2019-bmw-320d-m-sport"
 const slugify = (val: string): string =>
@@ -45,21 +56,23 @@ export const Vehicles: CollectionConfig = {
         description: 'Auto-filled from the title. Leave blank.',
       },
     },
-    // --- Core identity ---
+    //  Core identity
     {
       type: 'row',
       fields: [
         {
           name: 'make',
-          type: 'text',
+          type: 'select',
           required: true,
-          admin: { width: '50%', description: 'BMW, Audi, Ford...' },
+          options: MAKE_OPTIONS,
+          admin: { width: '50%' },
         },
         {
           name: 'model',
-          type: 'text',
+          type: 'select',
           required: true,
-          admin: { width: '50%', description: '320d, A4, Focus...' },
+          options: MODEL_OPTIONS,
+          admin: { width: '50%' },
         },
       ],
     },
@@ -70,7 +83,7 @@ export const Vehicles: CollectionConfig = {
         { name: 'year', type: 'number', required: true, admin: { width: '50%' } },
       ],
     },
-    // --- Money + condition ---
+    // Money and condition 
     {
       type: 'row',
       fields: [
@@ -78,7 +91,7 @@ export const Vehicles: CollectionConfig = {
         { name: 'mileage', type: 'number', required: true, admin: { width: '50%' } },
       ],
     },
-    // --- Spec selects ---
+    // Spec selects 
     {
       type: 'row',
       fields: [

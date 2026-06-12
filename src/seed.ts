@@ -1,11 +1,3 @@
-/**
- * Seed script: inserts a few sample cars so you have data to build against.
- * Run with:  npm run seed
- *
- * It downloads stock car photos, uploads them to your Media collection (which
- * goes to Vercel Blob), then creates vehicles referencing them.
- * Safe to run once. Re-running will create duplicates.
- */
 import { getPayload } from 'payload'
 import config from './payload.config'
 
@@ -52,7 +44,7 @@ const SAMPLES = [
 const run = async () => {
   const payload = await getPayload({ config })
 
-  // Make sure there's an admin user — create one if the DB is empty.
+  
   const users = await payload.find({ collection: 'users', limit: 1 })
   if (users.totalDocs === 0) {
     await payload.create({

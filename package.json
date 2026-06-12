@@ -12,7 +12,8 @@
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-    "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed.ts"
+    "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed.ts",
+    "seed:makes": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seedMakes.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.37.0",
@@ -22,6 +23,7 @@
     "@payloadcms/storage-vercel-blob": "3.37.0",
     "@payloadcms/ui": "3.37.0",
     "cross-env": "^7.0.3",
+    "dotenv": "^17.4.2",
     "graphql": "^16.8.1",
     "gsap": "^3.12.5",
     "lenis": "^1.1.13",
