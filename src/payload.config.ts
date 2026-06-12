@@ -11,7 +11,6 @@ import { Media } from './collections/Media'
 import { Vehicles } from './collections/Vehicles'
 import { Enquiries } from './collections/Enquiries'
 import { CompanySettings } from './globals/CompanySettings'
-import { Makes } from './collections/Makes'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -24,7 +23,7 @@ export default buildConfig({
       titleSuffix: '— NJ Motors Admin',
     },
   },
-  collections: [Users, Media, Vehicles, Makes, Enquiries],
+  collections: [Users, Media, Vehicles, Enquiries],
   globals: [CompanySettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

@@ -70,7 +70,6 @@ export interface Config {
     users: User;
     media: Media;
     vehicles: Vehicle;
-    makes: Make;
     enquiries: Enquiry;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -81,7 +80,6 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     vehicles: VehiclesSelect<false> | VehiclesSelect<true>;
-    makes: MakesSelect<false> | MakesSelect<true>;
     enquiries: EnquiriesSelect<false> | EnquiriesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -756,28 +754,6 @@ export interface Vehicle {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "makes".
- */
-export interface Make {
-  id: number;
-  /**
-   * e.g. BMW, Audi, Ford
-   */
-  name: string;
-  /**
-   * All models for this make, e.g. 320d, A4, Focus
-   */
-  models?:
-    | {
-        model: string;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "enquiries".
  */
 export interface Enquiry {
@@ -811,10 +787,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'vehicles';
         value: number | Vehicle;
-      } | null)
-    | ({
-        relationTo: 'makes';
-        value: number | Make;
       } | null)
     | ({
         relationTo: 'enquiries';
@@ -970,21 +942,6 @@ export interface VehiclesSelect<T extends boolean = true> {
   vatQualifying?: T;
   soldPrice?: T;
   soldDate?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "makes_select".
- */
-export interface MakesSelect<T extends boolean = true> {
-  name?: T;
-  models?:
-    | T
-    | {
-        model?: T;
-        id?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
 }
