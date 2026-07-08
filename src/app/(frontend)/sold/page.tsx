@@ -5,10 +5,10 @@ import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Recently Sold Cars',
+  title: { absolute: 'Recently Sold Cars | NJ Motors Peterborough' },
   description:
-    'See the cars NJ Motors has recently sold. Stock moves fast — get in touch early so you don’t miss the next one.',
-}
+    'A look at cars NJ Motors has recently sold in Peterborough. Our stock moves fast — get in touch early.',
+  }
 
 async function getSold() {
   try {

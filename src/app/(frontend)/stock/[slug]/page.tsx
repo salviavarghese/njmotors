@@ -9,6 +9,33 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 
 export const dynamic = 'force-dynamic'
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<import('next').Metadata> {
+  const { slug } = await params
+  try {
+    const { getPayloadClient } = await import('@/lib/payload')
+    const { formatPrice } = await import('@/lib/format')
+    const payload = await getPayloadClient()
+    const res = await payload.find({
+      collection: 'vehicles',
+      where: { slug: { equals: slug } },
+      limit: 1,
+      depth: 0,
+    })
+    const car = res.docs[0]
+    if (!car) return { title: { absolute: 'Car not found | NJ Motors' } }
+    return {
+      title: { absolute: `${car.year} ${car.make} ${car.model} — ${formatPrice(car.price)} | NJ Motors` },
+      description: `${car.year} ${car.make} ${car.model} for sale at NJ Motors in Peterborough. ${car.mileage} miles, ${car.fuelType}, ${car.transmission}. Fully inspected. Enquire today.`,
+    }
+  } catch {
+    return { title: { absolute: 'NJ Motors' } }
+  }
+}
+
 async function getVehicle(slug: string) {
   const payload = await getPayloadClient()
   const res = await payload.find({

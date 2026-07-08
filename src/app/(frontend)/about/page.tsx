@@ -4,9 +4,8 @@ import { ShieldCheck, MapPin, Handshake } from 'lucide-react'
 import { getCompanySettings } from '@/lib/payload'
 
 export const metadata: Metadata = {
-  title: 'About Us',
-  description:
-    'NJ Motors is a local used car dealer built on straight talk and honest cars. Find out how we buy, prepare and sell every vehicle.',
+  title: { absolute: 'About NJ Motors — Trusted Used Car Dealer in Peterborough' },
+  description: 'A local used car dealer built on straight talk and honest cars.',
 }
 
 export default async function AboutPage() {
@@ -15,28 +14,31 @@ export default async function AboutPage() {
     <div className="mx-auto max-w-3xl px-4 py-16">
       <h1 className="text-4xl font-extrabold text-[var(--brand)]">About NJ Motors</h1>
       <p className="mt-6 text-lg leading-relaxed text-[var(--ink)]">
-        We started NJ Motors ...
+        Buying a used car shouldn&apos;t be stressful or
+        confusing. Too many dealers leave you guessing. We&apos;d rather be straight with you from
+        the first conversation.
       </p>
-      <p className="mt-4 leading-relaxed text-[var(--muted)]">
-        We sell hand picked, road tested and fully inspected cars before it goes up for
-        sale. We&apos;re upfront about history, mileage and price.
+      <p className="mt-4 text-lg leading-relaxed text-[var(--ink)]">
+        Every car we sell is hand-picked, road-tested and fully inspected before it&apos;s listed.
+        The price you see is the price, no hidden fees, no games. And if a car isn&apos;t the right
+        fit, we&apos;ll say so. Repeat customers matter to us more than a quick sale.
       </p>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-3">
         <div className="rounded-xl border border-[var(--line)] p-5">
           <ShieldCheck className="text-[var(--brand-accent)]" />
-          <p className="mt-2 font-bold">Properly checked cars</p>
+          <p className="mt-2 font-bold">Properly checked</p>
           <p className="text-sm text-[var(--muted)]">Inspected and prepared before it&apos;s listed.</p>
         </div>
         <div className="rounded-xl border border-[var(--line)] p-5">
           <MapPin className="text-[var(--brand-accent)]" />
-          <p className="mt-2 font-bold">Local</p>
+          <p className="mt-2 font-bold">Local &amp; reachable</p>
           <p className="text-sm text-[var(--muted)]">{s?.address || 'Come and see us in person.'}</p>
         </div>
         <div className="rounded-xl border border-[var(--line)] p-5">
           <Handshake className="text-[var(--brand-accent)]" />
           <p className="mt-2 font-bold">Easy to deal with</p>
-          <p className="text-sm text-[var(--muted)]">No pressure</p>
+          <p className="text-sm text-[var(--muted)]">No pressure, no pushy sales.</p>
         </div>
       </div>
 

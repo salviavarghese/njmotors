@@ -6,10 +6,10 @@ import type { Where } from 'payload'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Used Cars in Stock',
+  title: { absolute: 'Used Cars for Sale in Peterborough | NJ Motors' },
   description:
-    'Browse our current range of quality used cars. Full specs, clear pricing and honest history on every vehicle. Find your next car with NJ Motors.',
-}
+    'Browse our range of quality used cars in Peterborough. Full specs, clear pricing and honest history on every vehicle.',
+  }
 
 type SearchParams = Promise<{ [k: string]: string | undefined }>
 
