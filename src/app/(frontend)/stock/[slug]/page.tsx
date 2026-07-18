@@ -47,21 +47,6 @@ async function getVehicle(slug: string) {
   return res.docs[0] || null
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}): Promise<Metadata> {
-  const { slug } = await params
-  const v = await getVehicle(slug)
-  if (!v) return { title: 'Car not found' }
-  return {
-    title: `${v.title} — ${formatPrice(v.price)}`,
-    description: `${v.year} ${v.make} ${v.model} for sale at NJ Motors. ${formatMiles(
-      v.mileage,
-    )}, ${v.fuelType}, ${v.transmission}. ${formatPrice(v.price)}. Enquire today.`,
-  }
-}
 
 export default async function VehicleDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
